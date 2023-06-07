@@ -112,7 +112,7 @@ public class Player_controller : MonoBehaviour
             // Use real gun assets
         } else
         {
-            var bullet = Instantiate(waterBulletPrefab, transform.position, transform.rotation) as GameObject;
+            var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
 
             bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
         }
