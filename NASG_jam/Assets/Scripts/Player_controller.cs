@@ -37,6 +37,8 @@ public class Player_controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
@@ -80,8 +82,13 @@ public class Player_controller : MonoBehaviour
 
     void FixedUpdate()
     {
+        RotateToMouse();
         playerRB.velocity = new Vector2(movement.x, movement.y).normalized * moveSpeed;
     }
 
-
+    private void RotateToMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
+    }
 }
