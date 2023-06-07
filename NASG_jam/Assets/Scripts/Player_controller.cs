@@ -24,8 +24,7 @@ public class Player_controller : MonoBehaviour
     [SerializeField] float timeBetweenSteps = 0.5f;
     private float timeBetweenStepsCounter;
 
-    private int lastIndex = 0;
-
+    //private int lastIndex = 0;
     
 
     private void Start()
