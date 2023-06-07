@@ -10,6 +10,7 @@ public class Player_controller : MonoBehaviour
 
     public static Player_controller instance;
 
+    
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<AudioClip> footsteps;
 
@@ -45,12 +46,12 @@ public class Player_controller : MonoBehaviour
             if (timeBetweenStepsCounter >= timeBetweenSteps)
             {
                 timeBetweenStepsCounter = 0f;
-                PlayFootStep();
+                //PlayFootStep();
             }
         }
     }
 
-
+    /*
     void PlayFootStep()
     {
         //Get a random footstep from the Footsteps list
@@ -75,6 +76,7 @@ public class Player_controller : MonoBehaviour
         audioSource.Play();
 
     }
+    */
 
     void FixedUpdate()
     {
