@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +9,23 @@ public class Player_controller : MonoBehaviour
     public Rigidbody2D playerRB;
     private Vector2 movement;
 
+    // Shooting variables:
+    [SerializeField] private bool transitionToRealGunHasOccured = false;
+    public GameObject waterBulletPrefab;
+    public GameObject realBulletPrefab;
+    [SerializeField] private float projectileSpeed = 20.0f;
+
     public static Player_controller instance;
 
+    
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<AudioClip> footsteps;
 
     [SerializeField] float timeBetweenSteps = 0.5f;
     private float timeBetweenStepsCounter;
 
-    private int lastIndex = 0;
+    //private int lastIndex = 0;
+    
 
     private void Start()
     {
@@ -45,12 +54,17 @@ public class Player_controller : MonoBehaviour
             if (timeBetweenStepsCounter >= timeBetweenSteps)
             {
                 timeBetweenStepsCounter = 0f;
-                PlayFootStep();
+                //PlayFootStep();
             }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            ShootBullet();
         }
     }
 
-
+    /*
     void PlayFootStep()
     {
         //Get a random footstep from the Footsteps list
@@ -75,11 +89,31 @@ public class Player_controller : MonoBehaviour
         audioSource.Play();
 
     }
+    */
 
     void FixedUpdate()
     {
+        RotateToMouse();
         playerRB.velocity = new Vector2(movement.x, movement.y).normalized * moveSpeed;
+        
     }
 
+    private void RotateToMouse()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, mousePos - transform.position);
+    }
 
+    private void ShootBullet()
+    {
+        if (transitionToRealGunHasOccured)
+        {
+            // Use real gun assets
+        } else
+        {
+            var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
+
+            bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
+        }
+    }
 }
