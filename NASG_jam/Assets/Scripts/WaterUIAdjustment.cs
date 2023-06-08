@@ -20,26 +20,19 @@ public class WaterUIAdjustment : MonoBehaviour
         content.sizeDelta = new Vector2(content.sizeDelta.x, currentWaterLevel);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateWaterValue()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Maybe do something to disable the option of picking up water when water is full
+        currentWaterLevel += waterGainFromPickup;
 
-            currentWaterLevel += waterGainFromPickup;
+        if (currentWaterLevel > maxWaterLevel) { currentWaterLevel = maxWaterLevel; }
 
-            if(currentWaterLevel > maxWaterLevel) { currentWaterLevel = maxWaterLevel; }
-
-            content.sizeDelta = new Vector2(content.sizeDelta.x, currentWaterLevel);
-            Invoke("UpdateLayout", 0.001f);
-        }
+        content.sizeDelta = new Vector2(content.sizeDelta.x, currentWaterLevel);
+        Invoke("UpdateLayout", 0.001f);
     }
 
-    void UpdateLayout()
+    public void UpdateLayout()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(content);
     }
-
 
 }
