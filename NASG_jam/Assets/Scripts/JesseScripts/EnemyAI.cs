@@ -20,12 +20,16 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D enemyRigidbody;
     private bool isChasing;
 
+    private IEnumerator enemyAICoroutine;
+
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemyRigidbody = GetComponent<Rigidbody2D>();
         isChasing = false;
-        StartCoroutine(PatrolRoutine());
+
+        enemyAICoroutine = PatrolRoutine();
+        StartCoroutine(enemyAICoroutine);
     }
 
     void Update()
@@ -81,5 +85,23 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
-    
+
+    public void EnemyDies()
+    {
+        // Lock position of enemy
+
+        
+        // Switch to death sprite
+
+
+        // Disable ongoing AI
+        StopCoroutine(enemyAICoroutine);
+
+        // Disable collision, if not already something like a trigger
+
+
+        // Spawn water resource pick-up (If in brown-level)
+
+        
+    }
 }
