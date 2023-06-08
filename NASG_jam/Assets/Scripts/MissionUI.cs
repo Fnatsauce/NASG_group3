@@ -7,7 +7,7 @@ public class MissionUI : MonoBehaviour
 {
     private TMP_Text m_TextComponent;
 
-    private int amountOfRemainingDryFriends = 10;
+    private int amountOfRemainingDryFriends = 2;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class MissionUI : MonoBehaviour
         if (amountOfRemainingDryFriends <= 0)
         {
             // Initiate level switch!
-
+            UIManager.instance.FadeToNextLevel();
             // Temp fix before level transition:
             amountOfRemainingDryFriends = 0;
         }
