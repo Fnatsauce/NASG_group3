@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (!isChasing)
             {
-                // Move forward for a random distance
+                // Move forward
                 float patrolDistance = Random.Range(minPatrolDistance, maxPatrolDistance);
                 float moveTime = patrolDistance / speed;
 
