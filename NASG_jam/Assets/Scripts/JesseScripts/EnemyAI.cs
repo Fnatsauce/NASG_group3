@@ -5,38 +5,103 @@ using UnityEngine;
 public class EnemyAI : MonoBehaviour
 {
     public float speed;
-    public float chasingRadius;
-    public float rotationSpeed;
+    public float chaseRadius;
+    public float rotationSpeed = 5f;
+
+    
+    public float minPauseTime = 1f;
+    public float maxPauseTime = 3f;
+    public float minPatrolDistance = 3f;
+    public float maxPatrolDistance = 5f;
+    public float minRotateAngle = -30f;
+    public float maxRotateAngle = 30f;
+
     private Transform playerTransform;
     private Rigidbody2D enemyRigidbody;
+    private bool isChasing;
 
+    private IEnumerator enemyAICoroutine;
 
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemyRigidbody = GetComponent<Rigidbody2D>();
-        StartCoroutine(CheckingRadius());
+        isChasing = false;
+
+        enemyAICoroutine = PatrolRoutine();
+        StartCoroutine(enemyAICoroutine);
     }
 
-    IEnumerator CheckingRadius()
+    void Update()
     {
-        while (true)
+        if (Vector3.Distance(playerTransform.position, transform.position) <= chaseRadius)
         {
-            if (Vector2.Distance(playerTransform.position, transform.position) <= chasingRadius)
-            {
-                Vector2 chasingPos = Vector3.MoveTowards(transform.position, playerTransform.position, speed * Time.deltaTime);
-                enemyRigidbody.MovePosition(chasingPos);
-
-
-                //EnemeyRotatingTowardsPlayer
-                Vector2 direction = playerTransform.position - transform.position;
-                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-            }
-            yield return null;
+            isChasing = true;
+        }
+        else
+        {
+            isChasing = false;
         }
     }
 
+    IEnumerator PatrolRoutine()
+    {
+        while (true)
+        {
+            if (!isChasing)
+            {
+                // Move forward for a random distance
+                float patrolDistance = Random.Range(minPatrolDistance, maxPatrolDistance);
+                float moveTime = patrolDistance / speed;
 
+                while (moveTime > 0f)
+                {
+                    enemyRigidbody.MovePosition(transform.position + transform.right * speed * Time.deltaTime);
+                    moveTime -= Time.deltaTime;
+                    yield return null;
+                }
+
+                // Pause 
+                float pauseTime = Random.Range(minPauseTime, maxPauseTime);
+                yield return new WaitForSeconds(pauseTime);
+
+                // Rotate
+                float rotateAngle = Random.Range(minRotateAngle, maxRotateAngle);
+                Quaternion newRotation = Quaternion.AngleAxis(rotateAngle, Vector3.forward);
+                transform.rotation = Quaternion.Slerp(transform.rotation, transform.rotation * newRotation, rotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                // Chase player
+                Vector3 temp = Vector3.MoveTowards(transform.position, playerTransform.position, speed * Time.deltaTime);
+                enemyRigidbody.MovePosition(temp);
+
+                // Rotate towards player
+                Vector3 direction = playerTransform.position - transform.position;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+                yield return null;
+            }
+        }
+    }
+
+    public void EnemyDies()
+    {
+        // Lock position of enemy
+
+        
+        // Switch to death sprite
+
+
+        // Disable ongoing AI
+        StopCoroutine(enemyAICoroutine);
+
+        // Disable collision, if not already something like a trigger
+
+
+        // Spawn water resource pick-up (If in brown-level)
+
+        
+    }
 }

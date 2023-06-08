@@ -22,7 +22,10 @@ public class BulletScript : MonoBehaviour
         Debug.Log(collision.gameObject.tag + " : " + gameObject.tag);
         if (collision.gameObject.tag == "Wall" || collision.gameObject.name.Contains("wall")) {
             Destroy(gameObject);
-        } 
+        } else if (collision.gameObject.tag == "Enemy" || collision.gameObject.name.Contains("Enemy"))
+        {
+            collision.gameObject.GetComponent<EnemyAI>().EnemyDies();
+        }
         // More collision options below
     }
 }

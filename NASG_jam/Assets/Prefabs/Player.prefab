@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7057185941700533017}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   moveSpeed: 5
   playerRB: {fileID: 3449428782855198941}
   transitionToRealGunHasOccured: 0
-  waterBulletPrefab: {fileID: 0}
+  waterBulletPrefab: {fileID: 1341680163310684667, guid: 02b4ac7aaa31f394fb7549130906cd20, type: 3}
   realBulletPrefab: {fileID: 0}
   projectileSpeed: 20
   audioSource: {fileID: 0}
