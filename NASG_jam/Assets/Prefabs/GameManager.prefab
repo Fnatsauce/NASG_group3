@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 5996240878074710865, guid: a2b2ec7ca2c1b4442bbdf9478b10bc83, type: 3}
   enemySpawnTimer: 0
-  timeTillNextEnemySpawn: 0
-  maxEnemySpawnTime: 0
-  enemySpawnTimeAdjuster: 0
+  timeTillNextEnemySpawn: 8
+  maxEnemySpawnTime: 30
+  enemySpawnTimeAdjuster: 1
