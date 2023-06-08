@@ -10,12 +10,15 @@ public class EnemyAI : MonoBehaviour
     private Transform playerTransform;
     private Rigidbody2D enemyRigidbody;
 
+    private IEnumerator enemyAICoroutine;
+
 
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemyRigidbody = GetComponent<Rigidbody2D>();
-        StartCoroutine(CheckingRadius());
+        enemyAICoroutine = CheckingRadius();
+        StartCoroutine(enemyAICoroutine);
     }
 
     IEnumerator CheckingRadius()
@@ -38,15 +41,22 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private void EnemyDies()
+    public void EnemyDies()
     {
+        // Lock position of enemy
+
+        
         // Switch to death sprite
 
 
         // Disable ongoing AI
-        StopCoroutine(CheckingRadius());
+        StopCoroutine(enemyAICoroutine);
+
+        // Disable collision, if not already something like a trigger
+
 
         // Spawn water resource pick-up (If in brown-level)
 
+        
     }
 }
