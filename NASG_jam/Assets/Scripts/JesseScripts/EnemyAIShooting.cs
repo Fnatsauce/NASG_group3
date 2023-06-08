@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EnemyAIShooting : MonoBehaviour
 {
+    public GameObject waterItemPrefab;
+
     public float speed;
     public float chaseRadius;
     public float rotationSpeed = 5f;
@@ -25,8 +27,7 @@ public class EnemyAIShooting : MonoBehaviour
     public float fireRate;
     private float nextFireTime;
 
-
-
+    private IEnumerator enemyAICoroutine;
 
     void Start()
     {
@@ -36,7 +37,8 @@ public class EnemyAIShooting : MonoBehaviour
 
         nextFireTime = Time.time;
 
-        StartCoroutine(PatrolRoutine());
+        enemyAICoroutine = PatrolRoutine();
+        StartCoroutine(enemyAICoroutine);
     }
 
     void Update()
@@ -134,5 +136,24 @@ public class EnemyAIShooting : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public void EnemyDies()
+    {
+        // Lock position of enemy
+
+
+        // Disable ongoing AI
+        StopCoroutine(enemyAICoroutine);
+
+        // Disable collision, if not already something like a trigger
+
+
+        // Spawn water resource pick-up (If in brown-level)
+        Instantiate(waterItemPrefab, transform.position, new Quaternion());
+
+        // Switch to death sprite
+        // TEMPORARY SOLUTION
+        Destroy(gameObject);
     }
 }

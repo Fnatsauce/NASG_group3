@@ -24,4 +24,29 @@ public class EnemyBullet : MonoBehaviour
     {
         
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.name.Contains("wall"))
+        {
+            Destroy(gameObject);
+        } else if (collision.gameObject.tag == "Player" || collision.gameObject.name.Contains("player"))
+        {
+            Destroy(gameObject);
+            // Maybe make the player make a sound or something?
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.name.Contains("wall"))
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.tag == "Player" || collision.gameObject.name.Contains("player"))
+        {
+            Destroy(gameObject);
+            // Maybe make the player make a sound or something?
+        }
+    }
 }
