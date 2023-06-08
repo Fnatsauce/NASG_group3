@@ -38,5 +38,15 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void EnemyDies()
+    {
+        // Switch to death sprite
 
+
+        // Disable ongoing AI
+        StopCoroutine(CheckingRadius());
+
+        // Spawn water resource pick-up (If in brown-level)
+
+    }
 }

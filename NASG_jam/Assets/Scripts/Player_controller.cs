@@ -114,6 +114,8 @@ public class Player_controller : MonoBehaviour
             var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
 
             bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
+
+            Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         }
     }
 }
