@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     [SerializeField] private GameObject waterLevelIndicator;
+    [SerializeField] private GameObject DryFriendAmount;
 
     private void Awake()
     {
@@ -31,9 +32,19 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void UpdateWaterValueInUI()
+    public void IncreaseWaterValueInUI()
     {
-        waterLevelIndicator.GetComponent<WaterUIAdjustment>().UpdateWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+    }
+
+    public void DecreaseWaterValueInUI()
+    {
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().DecreaseWaterValue();
+    }
+
+    public void DecreaseDryFriendAmountInUI()
+    {
+        DryFriendAmount.GetComponent<MissionUI>().DecreaseAmountOfDryFriendsAndUpdateMissionText();
     }
 
     private void FixedUpdate()

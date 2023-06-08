@@ -24,8 +24,11 @@ public class Player_controller : MonoBehaviour
     [SerializeField] float timeBetweenSteps = 0.5f;
     private float timeBetweenStepsCounter;
 
+    [SerializeField] private float timeTillNextDrink;
+    [SerializeField] private float timeBetweenDrinks = 12.0f;
+
     //private int lastIndex = 0;
-    
+
 
     private void Start()
     {
@@ -62,6 +65,8 @@ public class Player_controller : MonoBehaviour
         {
             ShootBullet();
         }
+
+        UpdateDrinkTime();
     }
 
     /*
@@ -116,6 +121,18 @@ public class Player_controller : MonoBehaviour
             bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
 
             Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        }
+    }
+
+    private void UpdateDrinkTime()
+    {
+        timeTillNextDrink -= Time.deltaTime;
+
+        if(timeTillNextDrink <= 0)
+        {
+            timeTillNextDrink = timeBetweenDrinks;
+            // Play drinking animation and/or change sprite
+            UIManager.instance.DecreaseWaterValueInUI();
         }
     }
 }

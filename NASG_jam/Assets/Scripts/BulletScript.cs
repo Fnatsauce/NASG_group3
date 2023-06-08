@@ -23,6 +23,7 @@ public class BulletScript : MonoBehaviour
             Destroy(gameObject);
         } else if (collision.gameObject.tag == "Enemy" || collision.gameObject.name.Contains("Enemy"))
         {
+            UIManager.instance.DecreaseDryFriendAmountInUI();
             collision.gameObject.GetComponent<EnemyAI>().EnemyDies();
         }
         // More collision options below

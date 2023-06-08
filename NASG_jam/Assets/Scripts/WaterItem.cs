@@ -14,10 +14,11 @@ public class WaterItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Player picks up WaterItem
         if (collision.gameObject.tag == "Player" || collision.gameObject.name.Contains("player"))
         {
             Destroy(gameObject);
-            UIManager.instance.UpdateWaterValueInUI();
+            UIManager.instance.IncreaseWaterValueInUI();
         }
     }
 }
