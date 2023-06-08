@@ -146,6 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e411c715c4eae8458092abb5aea18f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waterItemPrefab: {fileID: 3984764029651919630, guid: 19c6636fc740b5b418f4216ec90bfffe, type: 3}
   speed: 10
-  chasingRadius: 100
+  chaseRadius: 0
   rotationSpeed: 10
+  minPauseTime: 1
+  maxPauseTime: 3
+  minPatrolDistance: 3
+  maxPatrolDistance: 5
+  minRotateAngle: -30
+  maxRotateAngle: 30

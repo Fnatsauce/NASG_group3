@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
+    public GameObject waterItemPrefab;
+
     public float speed;
     public float chaseRadius;
     public float rotationSpeed = 5f;
@@ -50,7 +52,7 @@ public class EnemyAI : MonoBehaviour
         {
             if (!isChasing)
             {
-                // Move forward for a random distance
+                // Move forward
                 float patrolDistance = Random.Range(minPatrolDistance, maxPatrolDistance);
                 float moveTime = patrolDistance / speed;
 
@@ -90,9 +92,6 @@ public class EnemyAI : MonoBehaviour
     {
         // Lock position of enemy
 
-        
-        // Switch to death sprite
-
 
         // Disable ongoing AI
         StopCoroutine(enemyAICoroutine);
@@ -101,7 +100,10 @@ public class EnemyAI : MonoBehaviour
 
 
         // Spawn water resource pick-up (If in brown-level)
+        Instantiate(waterItemPrefab, transform.position, new Quaternion());
 
-        
+        // Switch to death sprite
+        // TEMPORARY SOLUTION
+        Destroy(gameObject);
     }
 }
