@@ -32,13 +32,16 @@ public class Player_controller : MonoBehaviour
 
     private bool currentlyDrinking = false;
     private GameObject playerBottleSpriteObject;
+    private GameObject playerNotifierSpriteObject;
 
     private void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody2D>();
         playerBottleSpriteObject = GetComponentInChildren<ActivateBottleScript>().gameObject;
+        playerNotifierSpriteObject = GetComponentInChildren<ActivateNotifierScript>().gameObject;
         // This is to set the bottle off at startup
         playerBottleSpriteObject.GetComponent<ActivateBottleScript>().ActivateBottleSprite();
+        playerNotifierSpriteObject.GetComponent<ActivateNotifierScript>().ActivateBottleSprite();
     }
 
     private void Awake()
@@ -153,18 +156,32 @@ public class Player_controller : MonoBehaviour
     {
         timeTillNextDrink -= Time.deltaTime;
 
-        if(timeTillNextDrink < 1 && currentlyDrinking==false)
+        if(timeTillNextDrink < 1 && currentlyDrinking==false && !UIManager.instance.CheckIfOutOfWater())
         {
             playerBottleSpriteObject.GetComponent<ActivateBottleScript>().ActivateBottleSprite();
             currentlyDrinking = true;
         }
-        if(timeTillNextDrink <= 0)
+        if (timeTillNextDrink < 1 && currentlyDrinking == false && UIManager.instance.CheckIfOutOfWater())
+        {
+            playerNotifierSpriteObject.GetComponent<ActivateNotifierScript>().ActivateBottleSprite();
+            currentlyDrinking = true;
+        }
+        if (timeTillNextDrink <= 0 && !UIManager.instance.CheckIfOutOfWater())
         {
             timeTillNextDrink = timeBetweenDrinks;
             // Play drinking animation and/or change sprite
             UIManager.instance.DecreaseWaterValueInUI();
 
             playerBottleSpriteObject.GetComponent<ActivateBottleScript>().ActivateBottleSprite();
+            currentlyDrinking = false;
+        }
+        if (timeTillNextDrink <= 0 && UIManager.instance.CheckIfOutOfWater())
+        {
+            timeTillNextDrink = timeBetweenDrinks;
+            // Play drinking animation and/or change sprite
+            UIManager.instance.DecreaseWaterValueInUI();
+
+            playerNotifierSpriteObject.GetComponent<ActivateNotifierScript>().ActivateBottleSprite();
             currentlyDrinking = false;
         }
     }
