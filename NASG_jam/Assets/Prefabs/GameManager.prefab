@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4009a560164cd4ea2e41ef8dd84f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 5996240878074710865, guid: a2b2ec7ca2c1b4442bbdf9478b10bc83, type: 3}
-  enemySpawnTimer: 0
+  enemyTypeOnePrefab: {fileID: 5996240878074710865, guid: a2b2ec7ca2c1b4442bbdf9478b10bc83, type: 3}
+  enemyTypeTwoShootingPrefab: {fileID: 5996240878074710865, guid: c5e4687b455733b47a1c0a6747d45194, type: 3}
+  enemySpawnTimer: 5
   timeTillNextEnemySpawn: 8
   maxEnemySpawnTime: 30
   enemySpawnTimeAdjuster: 1

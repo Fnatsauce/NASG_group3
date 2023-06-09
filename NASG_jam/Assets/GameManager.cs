@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
 
     public static GameManager gameManagerInstance;
 
-    public GameObject enemyPrefab; // Could be named to reflect multiple enemy types
+    public GameObject enemyTypeOnePrefab; // Could be named to reflect multiple enemy types
+    public GameObject enemyTypeTwoShootingPrefab; // Could be named to reflect multiple enemy types
 
     [SerializeField] private float enemySpawnTimer = 0.0f;
     [SerializeField] private float timeTillNextEnemySpawn = 8.0f;
@@ -46,13 +48,15 @@ public class GameManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        // Introduce randomness for which enemy type is spawned - For now it is only type 2 (The shooting one)
+
         if (activelySpawnEnemies)
         {
             enemySpawnTimer += Time.deltaTime;
 
             if (enemySpawnTimer >= timeTillNextEnemySpawn)
             {
-                Instantiate(enemyPrefab, GenerateRandomPositionOutsideCameraView(), transform.rotation);
+                Instantiate(enemyTypeTwoShootingPrefab, GenerateRandomPositionOutsideCameraView(), transform.rotation);
 
                 timeTillNextEnemySpawn += enemySpawnTimeAdjuster;
 
@@ -106,6 +110,20 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("GAME OVER!");
+        // Temporary reference to the current scene.
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // Retrieve the name of this scene.
+        string sceneName = currentScene.name;
+
+        // This is just to ensure only the RobotDeath scene is affected by this code. Other scenes should not have monsters triggering pressure plates
+        if (sceneName == "Level01")
+        {
+            Debug.Log("Player should go get more water");
+        }
+        else
+        {
+            UIManager.instance.FadeToNextLevel();
+        }
     }
 }

@@ -2,9 +2,13 @@ using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyAIShooting : MonoBehaviour
 {
+    public GameObject waterItemPrefab;
+    public GameObject deadEnemyPrefab;
+
     public float speed;
     public float chaseRadius;
     public float rotationSpeed = 5f;
@@ -20,23 +24,27 @@ public class EnemyAIShooting : MonoBehaviour
     private Rigidbody2D enemyRigidbody;
     private bool isChasing;
     private bool isTooClose;
+    private bool dead;
+    SpriteRenderer m_SpriteRenderer;
 
     public GameObject EnemyBullet;
+    public GameObject EnemyBulletReal;
     public float fireRate;
     private float nextFireTime;
 
-
-
+    private IEnumerator enemyAICoroutine;
 
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemyRigidbody = GetComponent<Rigidbody2D>();
         isChasing = false;
+        dead = false;
 
         nextFireTime = Time.time;
 
-        StartCoroutine(PatrolRoutine());
+        enemyAICoroutine = PatrolRoutine();
+        StartCoroutine(enemyAICoroutine);
     }
 
     void Update()
@@ -57,7 +65,7 @@ public class EnemyAIShooting : MonoBehaviour
 
 
         //Check Enemy Fire Again
-        if (isChasing && !isTooClose)
+        if (isChasing && !isTooClose && !dead)
         {
             nextFireTime += Time.deltaTime;
             if (nextFireTime > 2)
@@ -68,14 +76,25 @@ public class EnemyAIShooting : MonoBehaviour
         }
     }
 
-
-
     void ShootPlayer()
     {
-        GameObject bullet = Instantiate(EnemyBullet, transform.position, Quaternion.identity);
+        // Temporary reference to the current scene.
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // Retrieve the name of this scene.
+        string sceneName = currentScene.name;
+
+        // This is just to ensure only the RobotDeath scene is affected by this code. Other scenes should not have monsters triggering pressure plates
+        if (sceneName == "Level02_ApoNew")
+        {
+            GameObject bullet = Instantiate(EnemyBulletReal, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            GameObject bullet = Instantiate(EnemyBullet, transform.position, Quaternion.identity);
+        }
 
     }
-
 
     IEnumerator PatrolRoutine()
     {
@@ -134,5 +153,41 @@ public class EnemyAIShooting : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    public void EnemyDies()
+    {
+        // Lock position of enemy
+
+
+        // Disable collision, if not already something like a trigger
+
+
+        // Temporary reference to the current scene.
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // Retrieve the name of this scene.
+        string sceneName = currentScene.name;
+
+        // This is just to ensure only the RobotDeath scene is affected by this code. Other scenes should not have monsters triggering pressure plates
+        if (sceneName == "Level01")
+        {
+            //Fetch the SpriteRenderer from the GameObject
+            m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+            //Set the GameObject's Color quickly to a set Color (blue)
+            m_SpriteRenderer.color = Color.blue;
+            dead = true;
+            StopCoroutine(enemyAICoroutine);
+        } else
+        {
+            // Switch to death sprite
+            dead = true;
+            StopCoroutine(enemyAICoroutine);
+            Instantiate(deadEnemyPrefab, transform.position, new Quaternion());
+            Instantiate(waterItemPrefab, transform.position + transform.up, new Quaternion());
+            Destroy(gameObject);
+            
+        }
+        
     }
 }
