@@ -51,6 +51,25 @@ public class UIManager : MonoBehaviour
         
     }
 
+    public void CheckIfOutOfWater()
+    {
+
+    }
+
+    public void FillWaterValueInUI()
+    {
+        // I hate this code xD
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+        waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
+    }
+
     public void IncreaseWaterValueInUI()
     {
         waterLevelIndicator.GetComponent<WaterUIAdjustment>().IncreaseWaterValue();
