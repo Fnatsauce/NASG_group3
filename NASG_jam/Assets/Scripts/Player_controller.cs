@@ -17,6 +17,9 @@ public class Player_controller : MonoBehaviour
 
     public static Player_controller instance;
 
+    public AudioClip shootSound;
+    private AudioSource audioSource;
+
     
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private List<AudioClip> footsteps;
@@ -30,6 +33,7 @@ public class Player_controller : MonoBehaviour
     private void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Awake()
@@ -112,6 +116,9 @@ public class Player_controller : MonoBehaviour
         } else
         {
             var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
+
+            audioSource.clip = shootSound;
+            audioSource.Play();
 
             bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
 
