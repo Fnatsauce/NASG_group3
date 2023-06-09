@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterItemPrefab: {fileID: 3984764029651919630, guid: 19c6636fc740b5b418f4216ec90bfffe, type: 3}
+  deadEnemyPrefab: {fileID: 3984764029651919630, guid: 1586815de87bb07438e671e448f23ea3, type: 3}
   speed: 15
   chaseRadius: 20
   rotationSpeed: 5
@@ -143,6 +144,7 @@ MonoBehaviour:
   minRotateAngle: -30
   maxRotateAngle: 30
   EnemyBullet: {fileID: 1341680163310684667, guid: 13e9c00c7628c3c429e69a9a52693e85, type: 3}
+  EnemyBulletReal: {fileID: 1341680163310684667, guid: adf993ab0ed76c34d9f91750f8690483, type: 3}
   fireRate: 2
 --- !u!50 &4839595564614776076
 Rigidbody2D:

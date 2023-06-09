@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject waterLevelIndicator;
     [SerializeField] private GameObject DryFriendAmount;
 
+    private bool weAreInLevel1 = false;
+
     private void Awake()
     {
         if (instance == null)
@@ -26,7 +28,21 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Temporary reference to the current scene.
+        Scene currentScene = SceneManager.GetActiveScene();
+
+        // Retrieve the name of this scene.
+        string sceneName = currentScene.name;
+
+        // This is just to ensure only the RobotDeath scene is affected by this code. Other scenes should not have monsters triggering pressure plates
+        if (sceneName == "Level01")
+        {
+            weAreInLevel1 = true;
+        }
+        else
+        {
+            weAreInLevel1 = false;
+        }
     }
 
     // Update is called once per frame
@@ -42,12 +58,17 @@ public class UIManager : MonoBehaviour
 
     public void DecreaseWaterValueInUI()
     {
+        
         waterLevelIndicator.GetComponent<WaterUIAdjustment>().DecreaseWaterValue();
+        
     }
 
     public void DecreaseDryFriendAmountInUI()
     {
-        DryFriendAmount.GetComponent<MissionUI>().DecreaseAmountOfDryFriendsAndUpdateMissionText();
+        if (weAreInLevel1)
+        {
+            DryFriendAmount.GetComponent<MissionUI>().DecreaseAmountOfDryFriendsAndUpdateMissionText();
+        }
     }
 
     private void FixedUpdate()

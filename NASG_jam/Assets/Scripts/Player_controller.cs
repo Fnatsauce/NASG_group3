@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_controller : MonoBehaviour
 {
@@ -29,10 +30,15 @@ public class Player_controller : MonoBehaviour
 
     //private int lastIndex = 0;
 
+    private bool currentlyDrinking = false;
+    private GameObject playerBottleSpriteObject;
 
     private void Start()
     {
         playerRB = gameObject.GetComponent<Rigidbody2D>();
+        playerBottleSpriteObject = GetComponentInChildren<ActivateBottleScript>().gameObject;
+        // This is to set the bottle off at startup
+        playerBottleSpriteObject.GetComponent<ActivateBottleScript>().ActivateBottleSprite();
     }
 
     private void Awake()
@@ -101,6 +107,20 @@ public class Player_controller : MonoBehaviour
         RotateToMouse();
         playerRB.velocity = new Vector2(movement.x, movement.y).normalized * moveSpeed;
         
+        if(!transitionToRealGunHasOccured)
+        {
+            // Temporary reference to the current scene.
+            Scene currentScene = SceneManager.GetActiveScene();
+
+            // Retrieve the name of this scene.
+            string sceneName = currentScene.name;
+
+            // This is just to ensure only the RobotDeath scene is affected by this code. Other scenes should not have monsters triggering pressure plates
+            if (sceneName == "Level02_ApoNew")
+            {
+                transitionToRealGunHasOccured = true;
+            }
+        }
     }
 
     private void RotateToMouse()
@@ -113,7 +133,11 @@ public class Player_controller : MonoBehaviour
     {
         if (transitionToRealGunHasOccured)
         {
-            // Use real gun assets
+            var bullet = Instantiate(realBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
+
+            bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
+
+            Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         } else
         {
             var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
@@ -128,11 +152,19 @@ public class Player_controller : MonoBehaviour
     {
         timeTillNextDrink -= Time.deltaTime;
 
+        if(timeTillNextDrink < 1 && currentlyDrinking==false)
+        {
+            playerBottleSpriteObject.GetComponent<ActivateBottleScript>().ActivateBottleSprite();
+            currentlyDrinking = true;
+        }
         if(timeTillNextDrink <= 0)
         {
             timeTillNextDrink = timeBetweenDrinks;
             // Play drinking animation and/or change sprite
             UIManager.instance.DecreaseWaterValueInUI();
+
+            playerBottleSpriteObject.GetComponent<ActivateBottleScript>().ActivateBottleSprite();
+            currentlyDrinking = false;
         }
     }
 }
