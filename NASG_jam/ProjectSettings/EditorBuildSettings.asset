@@ -10,8 +10,14 @@ EditorBuildSettings:
     guid: bea0c8e3a6ce0954ead10a9e0a1ba8ff
   - enabled: 1
     path: Assets/Scenes/Level01.unity
-    guid: ac6630de5bda3d349815147c3970a738
+    guid: f1f953f4a395dde4fbf4cf0822c93392
   - enabled: 1
     path: Assets/Scenes/Level02_ApoNew.unity
     guid: f034516c767e58a4c9a962c6c75231e2
+  - enabled: 1
+    path: Assets/Scenes/EndingText-1.unity
+    guid: 9b4cf262477c7f7478f53d1b28880e64
+  - enabled: 1
+    path: Assets/Scenes/EndingText-2.unity
+    guid: fb2fc7334f0b0ed4cbbf4abec2ad6880
   m_configObjects: {}

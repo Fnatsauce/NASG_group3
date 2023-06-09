@@ -23,4 +23,12 @@ public class WaterRefillObject : MonoBehaviour
             UIManager.instance.FillWaterValueInUI();
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player" || collision.gameObject.name.Contains("player"))
+        {
+            UIManager.instance.FillWaterValueInUI();
+        }
+    }
 }

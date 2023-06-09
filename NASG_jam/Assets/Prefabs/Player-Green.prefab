@@ -200,7 +200,7 @@ MonoBehaviour:
   moveSpeed: 5
   playerRB: {fileID: 3449428782855198941}
   transitionToRealGunHasOccured: 0
-  waterBulletPrefab: {fileID: 1341680163310684667, guid: 02b4ac7aaa31f394fb7549130906cd20, type: 3}
+  waterBulletPrefab: {fileID: 1341680163310684667, guid: 0eeb3301758079e41a938b3924af927a, type: 3}
   realBulletPrefab: {fileID: 1341680163310684667, guid: 7c453234f37f1344e9d635d0a1a55424, type: 3}
   projectileSpeed: 20
   audioSource: {fileID: 0}
