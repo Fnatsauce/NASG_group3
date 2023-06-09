@@ -138,11 +138,14 @@ public class Player_controller : MonoBehaviour
             bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
         } else
         {
-            var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
+            if (!UIManager.instance.CheckIfOutOfWater())
+            {
+                var bullet = Instantiate(waterBulletPrefab, transform.position + (transform.up), transform.rotation) as GameObject;
 
-            bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
+                bullet.GetComponent<Rigidbody2D>().velocity = transform.up * projectileSpeed;
 
-            UIManager.instance.DecreaseWaterValueInUI();
+                UIManager.instance.DecreaseWaterValueInUI();
+            }
         }
     }
 

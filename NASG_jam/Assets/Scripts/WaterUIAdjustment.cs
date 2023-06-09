@@ -49,4 +49,16 @@ public class WaterUIAdjustment : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(content);
     }
 
+    public bool CheckIfOutOfWater()
+    {
+        if (currentWaterLevel <= 0)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+        
+    }
+
 }

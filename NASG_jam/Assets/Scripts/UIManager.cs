@@ -51,9 +51,9 @@ public class UIManager : MonoBehaviour
         
     }
 
-    public void CheckIfOutOfWater()
+    public bool CheckIfOutOfWater()
     {
-
+        return waterLevelIndicator.GetComponent<WaterUIAdjustment>().CheckIfOutOfWater();
     }
 
     public void FillWaterValueInUI()
