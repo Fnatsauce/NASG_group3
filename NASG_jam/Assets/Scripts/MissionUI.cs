@@ -7,7 +7,7 @@ public class MissionUI : MonoBehaviour
 {
     private TMP_Text m_TextComponent;
 
-    private int amountOfRemainingDryFriends = 2;
+    private int amountOfRemainingDryFriends = 5;
 
     private void Awake()
     {

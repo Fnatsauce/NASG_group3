@@ -34,6 +34,7 @@ public class EnemyBullet : MonoBehaviour
         {
             Destroy(gameObject);
             // Maybe make the player make a sound or something?
+
         }
     }
 
@@ -47,6 +48,7 @@ public class EnemyBullet : MonoBehaviour
         {
             Destroy(gameObject);
             // Maybe make the player make a sound or something?
+
         }
     }
 }
